@@ -57,7 +57,7 @@ public class WhitePlayer : MonoBehaviour {
             }
 
         }
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             if (IsGrounded()) {
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
             }
