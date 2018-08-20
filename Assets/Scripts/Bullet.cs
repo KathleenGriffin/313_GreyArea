@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    public float speed = 1.0f;
+    public float speed = 0.0001f;
 
     // Use this for initialization
     void Start()
     {
-        transform.Translate(0, 0, speed);
-
-
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        transform.Translate(speed, 0, 0);
 	}
+
+
+    //so that we don't end up with 1000 bullets floating round
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 }

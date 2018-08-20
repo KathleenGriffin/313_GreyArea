@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class WhitePlayer : MonoBehaviour
 {
 
+    Quaternion bulletRotation;
+
     public Camera cam;
     public GameObject bullet;
 
@@ -48,8 +50,11 @@ public class WhitePlayer : MonoBehaviour
     //I think it's pretty obvious, but this is where we control the shooting
     private void DoShoot() {
         //Quaternion  rotation = new Quaternion(0,0,180,0);
-        Instantiate(bullet, transform.position, transform.rotation);
+        Instantiate(bullet, transform.position, bulletRotation);
     }
+
+
+
 
 
     private void DoMovement()
@@ -77,6 +82,7 @@ public class WhitePlayer : MonoBehaviour
         //getKey rather than getKey down so you can hold it down
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            bulletRotation = new Quaternion(0, 0, 0, 0);
             if (IsGrounded())
             {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -89,6 +95,7 @@ public class WhitePlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+            bulletRotation = new Quaternion(0, 0, 180, 0);
             if (IsGrounded())
             {
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
