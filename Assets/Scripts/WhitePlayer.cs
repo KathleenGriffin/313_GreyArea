@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class WhitePlayer : MonoBehaviour
 {
 
-    Camera camera; 
+    Camera camera;
+    public GameObject bullet;
 
 
     BoxCollider2D boxCol;
@@ -27,20 +28,26 @@ public class WhitePlayer : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
-    {
+    void Start(){
         camera = Camera.main;
         position = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update(){
         DoMovement();
 
+        // '/' to shoot
+        if (Input.GetKeyDown(KeyCode.Slash)) {
+            DoShoot();
+        }
 
 
+    }
+
+    //I think it's pretty obvious, but this is where we control the shooting
+    private void DoShoot() {
+        Instantiate(bullet, transform.position, transform.rotation);
     }
 
 
@@ -93,21 +100,15 @@ public class WhitePlayer : MonoBehaviour
 
     }
 
-    bool IsGrounded()
-    {
+    bool IsGrounded(){
         position = transform.position;
         direction = Vector2.down;
         float distance = 0.5f;
-
         RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
-
-        if (hit.collider != null)
-        {
-
+        if (hit.collider != null){
             doubleBounced = false;
             return true;
         }
-
         return false;
     }
 
@@ -127,10 +128,6 @@ public class WhitePlayer : MonoBehaviour
             newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.99f, viewportPos.y, viewportPos.z));
             transform.position = newPos;
         }
-    }
-
-    public void ResetVelocity(){
-        rb.velocity = Vector2.zero;
     }
 
 
