@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class WhitePlayer : MonoBehaviour
 {
 
-    Camera camera;
+    public Camera cam;
     public GameObject bullet;
 
 
@@ -29,7 +29,7 @@ public class WhitePlayer : MonoBehaviour
 
     // Use this for initialization
     void Start(){
-        camera = Camera.main;
+        cam = Camera.main;
         position = transform.position;
     }
 
@@ -47,6 +47,7 @@ public class WhitePlayer : MonoBehaviour
 
     //I think it's pretty obvious, but this is where we control the shooting
     private void DoShoot() {
+        //Quaternion  rotation = new Quaternion(0,0,180,0);
         Instantiate(bullet, transform.position, transform.rotation);
     }
 
@@ -116,16 +117,16 @@ public class WhitePlayer : MonoBehaviour
     //when they go off the screen, make them come back the other side
     void OnBecameInvisible() {
         //Debug.Log("invisible");
-        Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+        Vector3 viewportPos = cam.WorldToViewportPoint(transform.position);
         Vector3 newPos = transform.position; 
         if (viewportPos.x > 0.99f) {
             //Debug.Log("working");
-            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.001f, viewportPos.y, viewportPos.z));
+            newPos = cam.ViewportToWorldPoint(new Vector3(0.001f, viewportPos.y, viewportPos.z));
             transform.position = newPos;
         }
         else if (viewportPos.x < 0.01f){
             //Debug.Log("working");
-            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.99f, viewportPos.y, viewportPos.z));
+            newPos = cam.ViewportToWorldPoint(new Vector3(0.99f, viewportPos.y, viewportPos.z));
             transform.position = newPos;
         }
     }
