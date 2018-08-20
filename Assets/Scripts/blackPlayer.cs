@@ -33,9 +33,14 @@ public class blackPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DoMovement();
 
 
 
+
+    }
+
+    private void DoMovement() {
         if (IsGrounded() && rb.velocity.x < 0)
         {
             rb.velocity = new Vector2(rb.velocity.x + (0 + Math.Abs(rb.velocity.x)) * 0.1f, rb.velocity.y);
@@ -68,7 +73,7 @@ public class blackPlayer : MonoBehaviour
             }
 
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             if (IsGrounded())
             {
@@ -79,7 +84,6 @@ public class blackPlayer : MonoBehaviour
                 rb.velocity = new Vector2(-speed * 0.8f, rb.velocity.y);
             }
         }
-
     }
 
     bool IsGrounded()
