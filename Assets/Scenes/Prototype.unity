@@ -123,9 +123,10 @@ GameObject:
   - component: {fileID: 32526776}
   - component: {fileID: 32526775}
   - component: {fileID: 32526774}
+  - component: {fileID: 32526777}
   m_Layer: 0
   m_Name: bullet
-  m_TagString: Untagged
+  m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba67f0cab718e410f9b8e6c7e0e8da2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.5
 --- !u!212 &32526775
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -201,6 +202,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &32526777
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 32526773}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1 &108982726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064ae58f2221e40ffa94dec3a44ebeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletCollider: {fileID: 0}
+  bullets: []
   cam: {fileID: 761512199}
   bullet: {fileID: 32526773}
   groundLayer:

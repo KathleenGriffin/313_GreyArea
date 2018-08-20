@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class WhitePlayer : MonoBehaviour
 {
-
+    public Collider2D bulletCollider;
     Quaternion bulletRotation;
+    public GameObject[] bullets;
 
     public Camera cam;
     public GameObject bullet;
@@ -38,6 +39,7 @@ public class WhitePlayer : MonoBehaviour
     // Update is called once per frame
     void Update(){
         DoMovement();
+        GotShot();
 
         // '/' to shoot
         if (Input.GetKeyDown(KeyCode.Slash)) {
@@ -51,6 +53,22 @@ public class WhitePlayer : MonoBehaviour
     private void DoShoot() {
         //Quaternion  rotation = new Quaternion(0,0,180,0);
         Instantiate(bullet, transform.position, bulletRotation);
+    }
+
+    //check if we got shot 
+    private void GotShot() {
+        bullets = GameObject.FindGameObjectsWithTag("bullet");
+
+        //go through all the bullets that currently exist
+        foreach (GameObject b in bullets)
+        {
+
+            bulletCollider = b.GetComponent<Collider2D>();
+            if (bulletCollider.IsTouching(boxCol)){
+                //u got shot
+                Debug.Log("got shot");
+            }
+        }
     }
 
 
