@@ -23,6 +23,8 @@ public class blackPlayer : MonoBehaviour
     bool doubleBounced = false;
     float jumpHeight = 1.0f;
 
+    SpriteRenderer spriteRenderer;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +36,8 @@ public class blackPlayer : MonoBehaviour
     {
         cam = Camera.main;
         position = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = Color.black;
     }
 
     // Update is called once per frame
@@ -46,6 +50,15 @@ public class blackPlayer : MonoBehaviour
         {
             DoShoot();
         }
+
+        //turn grey if you lose yourself
+        if (Input.GetKey(KeyCode.S)) {
+            spriteRenderer.color = Color.grey;
+        }
+        else {
+            spriteRenderer.color = Color.black;
+        }
+
 
 
     }

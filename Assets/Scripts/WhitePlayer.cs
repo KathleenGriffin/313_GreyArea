@@ -24,6 +24,8 @@ public class WhitePlayer : MonoBehaviour
     bool doubleBounced = false;
     float jumpHeight = 1.0f;
 
+    SpriteRenderer spriteRenderer;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +36,8 @@ public class WhitePlayer : MonoBehaviour
     void Start(){
         cam = Camera.main;
         position = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = Color.white;
     }
 
     // Update is called once per frame
@@ -44,6 +48,16 @@ public class WhitePlayer : MonoBehaviour
         // '/' to shoot
         if (Input.GetKeyDown(KeyCode.Slash)) {
             DoShoot();
+        }
+
+        //turn grey if you lose yourself
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            spriteRenderer.color = Color.grey;
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
         }
 
 
