@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class blackPlayer : MonoBehaviour
 {
-
+    Camera camera;
 
     BoxCollider2D boxCol;
 
@@ -27,6 +27,7 @@ public class blackPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        camera = Camera.main;
         position = transform.position;
     }
 
@@ -40,7 +41,8 @@ public class blackPlayer : MonoBehaviour
 
     }
 
-    private void DoMovement() {
+    private void DoMovement()
+    {
         if (IsGrounded() && rb.velocity.x < 0)
         {
             rb.velocity = new Vector2(rb.velocity.x + (0 + Math.Abs(rb.velocity.x)) * 0.1f, rb.velocity.y);
@@ -103,6 +105,30 @@ public class blackPlayer : MonoBehaviour
 
         return false;
     }
+
+
+
+    void OnBecameInvisible()
+    {
+        //Debug.Log("invisible");
+        Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+        Vector3 newPos = transform.position;
+        if (viewportPos.x > 0.99f)
+        {
+            //Debug.Log("working");
+            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.001f, viewportPos.y, viewportPos.z));
+            transform.position = newPos;
+        }
+        else if (viewportPos.x < 0.01f)
+        {
+            //Debug.Log("working");
+            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.99f, viewportPos.y, viewportPos.z));
+            transform.position = newPos;
+        }
+    }
+
+
+
 
     public void ResetVelocity()
     {

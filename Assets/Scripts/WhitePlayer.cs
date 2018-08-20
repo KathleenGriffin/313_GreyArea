@@ -111,20 +111,25 @@ public class WhitePlayer : MonoBehaviour
         return false;
     }
 
-    void OnBecameInvisible() {
-        Debug.Log("invisible");
-        Vector2 viewportPos = camera.WorldToViewportPoint(transform.position);
-        Vector2 newPos = transform.position; 
-        if (viewportPos.x > 1 || viewportPos.x < 0) {
-            Debug.Log("redraw");
-            newPos.x = -(newPos.x-3);
-        }
-        transform.position = newPos;
 
+    //when they go off the screen, make them come back the other side
+    void OnBecameInvisible() {
+        //Debug.Log("invisible");
+        Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+        Vector3 newPos = transform.position; 
+        if (viewportPos.x > 0.99f) {
+            //Debug.Log("working");
+            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.001f, viewportPos.y, viewportPos.z));
+            transform.position = newPos;
+        }
+        else if (viewportPos.x < 0.01f){
+            //Debug.Log("working");
+            newPos = Camera.main.ViewportToWorldPoint(new Vector3(0.99f, viewportPos.y, viewportPos.z));
+            transform.position = newPos;
+        }
     }
 
-    public void ResetVelocity()
-    {
+    public void ResetVelocity(){
         rb.velocity = Vector2.zero;
     }
 
