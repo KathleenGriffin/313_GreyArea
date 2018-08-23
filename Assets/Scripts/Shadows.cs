@@ -5,7 +5,9 @@ using UnityEngine;
 public class Shadows : MonoBehaviour {
     Renderer rend;
     bool on = true;
-    bool discoTime = false;
+    public bool discoTime = false;
+    int discoCount = 0;
+
 	// Use this for initialization
 	void Start () {
         rend = gameObject.GetComponent<Renderer>();
@@ -15,22 +17,44 @@ public class Shadows : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        if (Input.GetKeyDown(KeyCode.O))
-        {
+        //key bound boogie
+        if (Input.GetKeyDown(KeyCode.I)){
             discoTime = true;
         }
 
-        if (discoTime == true) {
-            doDisco();
+        //only do 100 disco flashes
+        if (discoTime == true && discoCount < 100) {
+            DoDisco();
+            //reset disco count so can be used again!
+            if (discoCount >= 500) {
+                discoCount = 0;
+                discoTime = false;
+            }
         }
 
 		
 	}
 
+    //called by swap powerup
+    public void DoSwap() {
+        if (on == true) {
+            rend.enabled = false;
+            on = false;
+        }
+        else{
+            rend.enabled = true;
+            on = true;
+        }
+    }
+
+
     //a power up
-    void doDisco() {
+    public void DoDisco() {
         //Debug.Log("doing disco");
+
+
         if ((Time.frameCount % 10) == 0) {
+            discoCount++;
             if (on == true) {
                 rend.enabled = false;
                 on = false;

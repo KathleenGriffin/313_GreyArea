@@ -13,6 +13,8 @@ public class WhitePlayer : MonoBehaviour
     public Camera cam;
     public GameObject bullet;
 
+    public Vector3 respawn = new Vector3(3.0f, -4.0f, -1.0f);
+    int lives;
 
     BoxCollider2D boxCol;
 
@@ -38,6 +40,7 @@ public class WhitePlayer : MonoBehaviour
         position = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.white;
+        lives = 10;
     }
 
     // Update is called once per frame
@@ -60,6 +63,15 @@ public class WhitePlayer : MonoBehaviour
             spriteRenderer.color = Color.white;
         }
 
+        if (lives <= 0)
+        {
+            DoRespawn();
+        }
+
+        if(transform.position.y <= -6f) {
+            DoRespawn();
+        }
+
 
     }
 
@@ -80,11 +92,16 @@ public class WhitePlayer : MonoBehaviour
             bulletCollider = b.GetComponent<Collider2D>();
             if (bulletCollider.IsTouching(boxCol)){
                 //u got shot
-                Debug.Log("got shot");
+                Debug.Log("white got shot");
+                lives--;
             }
         }
     }
 
+    void DoRespawn() {
+        transform.position = respawn;
+        lives = 10;
+    }
 
 
 

@@ -11,9 +11,13 @@ public class blackPlayer : MonoBehaviour
 
     public Camera cam;
     public GameObject bullet;
+    public GameObject[] bullets;
+    public Collider2D bulletCollider;
 
+    public Vector3 respawn = new Vector3(-6.0f, 4.0f, -1.0f);
+    int lives = 10;
 
-    BoxCollider2D boxCol;
+    BoxCollider2D blackCol;
 
     public LayerMask groundLayer;
     public float speed;
@@ -28,7 +32,7 @@ public class blackPlayer : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        boxCol = GetComponent<BoxCollider2D>();
+        blackCol = GetComponent<BoxCollider2D>();
     }
 
     // Use this for initialization
@@ -44,6 +48,7 @@ public class blackPlayer : MonoBehaviour
     void Update()
     {
         DoMovement();
+        GotShot();
 
         // '/' to shoot
         if (Input.GetKeyDown(KeyCode.Q))
@@ -59,6 +64,18 @@ public class blackPlayer : MonoBehaviour
             spriteRenderer.color = Color.black;
         }
 
+        if (lives <= 0)
+        {
+            DoRespawn();
+        }
+
+        if (transform.position.y <= -6f)
+        {
+            DoRespawn();
+        }
+
+
+
 
 
     }
@@ -67,6 +84,30 @@ public class blackPlayer : MonoBehaviour
     private void DoShoot()
     {
         Instantiate(bullet, transform.position, bulletRotation);
+    }
+
+    void DoRespawn()
+    {
+        transform.position = respawn;
+        lives = 10;
+    }
+
+
+    //check if we got shot 
+    private void GotShot()
+    {
+        bullets = GameObject.FindGameObjectsWithTag("bullet");
+        //go through all the bullets that currently exist
+        foreach (GameObject b in bullets)
+        {
+            bulletCollider = b.GetComponent<Collider2D>();
+            if (bulletCollider.IsTouching(blackCol))
+            {
+                //u got shot
+                Debug.Log("black got shot");
+                lives--;
+            }
+        }
     }
 
 
